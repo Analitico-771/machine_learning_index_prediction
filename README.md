@@ -41,6 +41,14 @@ This project leverages the following tools for financial analysis:
 Input data is yesterday’s market data from various SP500 sub-indexes. Sub-indexes to use: Sectors.
 `SP500.db` contains data foranalysis.
 
+Data is provided preformatted via the SP500.db.  Tables included are:
+- SectorDF: Base Data, includes all the SP500 stocks broken into sectors and averaged.  Timeframe is 1Y.
+- SectorDF3Y: 3 Year version of the Data.
+- SectorDFNegative and SectorDF3YNegative: 1Y and 3Y versions of the data, but SPY is -1 when its negative instead of 0.
+- SectorDFLarge and SectorDF3YLarge: 1Y and 3Y versions of the data, but spy is 1 if its greater than 0.005, -1 if less than -0.005, or 0 if in between.
+
+Data can be pulled from teh Alpaca API using SP500.ipynb and stored in the DB.  An alpaca API key is required and should be stored in a .env file (not included).  Howeversample data is preloaded in the Database runnign the SPI is not necessary.
+
 ---
 
 ## Neural network
