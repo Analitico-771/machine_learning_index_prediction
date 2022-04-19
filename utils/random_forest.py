@@ -54,6 +54,9 @@ def get_importance(train_split, X):
     rdm_forest_model.fit(X_train_scaled, np.ravel(y_train, order='c'), sample_weight=None)
     # analyze the feature importance values
     feat_importances = rdm_forest_model.feature_importances_
+    new_feature_importances = []
+    columns_to_drop = []
+    dropped_feature_importances = []
     count = 0
     X_new = X.copy()
     X_new_cols = X_new.columns.to_list()
@@ -61,26 +64,28 @@ def get_importance(train_split, X):
         X_new.drop(columns={'SPY'})
 
     print('X_new_cols', X_new_cols)
-    columns_to_drop = []
-    dropped_feature_importances = []
+    
     # print(np.mean(feat_importances))
     # Check for importance level and remove cols from df below threshold
     for each_feat in feat_importances:
-        if each_feat < 0.085:
+        if each_feat <= 0.085:
             dropped_feature_importances.append(each_feat)
+            # new_feature_importances.pop(each_feat)
             columns_to_drop.append(X_new_cols[count])
             # Remove open and close columns from X_new
             X_new.drop(columns={X_new_cols[count]}, inplace=True)
+        elif each_feat > 0.085:
+            new_feature_importances.append(each_feat)
         count = count + 1
 
     # check new X df for accuracy
-    print('feat_importance\n', feat_importances)
+    print('new_feature_importances\n', new_feature_importances)
     print('dropped_feature_importances\n', dropped_feature_importances)
     print('dropped_X_columns\n', columns_to_drop)
     
     # Return the model and the new X df with optimized important columns
     return {
-        'feat_importances': feat_importances,
+        'new_feature_importances': new_feature_importances,
         'rdm_forest_model': rdm_forest_model,
         'X_new': X_new
     }
