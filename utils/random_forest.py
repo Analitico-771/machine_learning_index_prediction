@@ -74,11 +74,12 @@ def get_importance(train_split, X):
             columns_to_drop.append(X_new_cols[count])
             # Remove open and close columns from X_new
             X_new.drop(columns={X_new_cols[count]}, inplace=True)
-        elif each_feat > 0.085:
+        elif each_feat > 0.095:
             new_feature_importances.append(each_feat)
         count = count + 1
 
     # check new X df for accuracy
+    print('feat_importances\n', feat_importances)
     print('new_feature_importances\n', new_feature_importances)
     print('dropped_feature_importances\n', dropped_feature_importances)
     print('dropped_X_columns\n', columns_to_drop)
