@@ -65,16 +65,17 @@ def get_importance(train_split, X):
 
     print('X_new_cols', X_new_cols)
     
+    importance = 0.095
     # print(np.mean(feat_importances))
     # Check for importance level and remove cols from df below threshold
     for each_feat in feat_importances:
-        if each_feat <= 0.085:
+        if each_feat <= importance:
             dropped_feature_importances.append(each_feat)
             # new_feature_importances.pop(each_feat)
             columns_to_drop.append(X_new_cols[count])
             # Remove open and close columns from X_new
             X_new.drop(columns={X_new_cols[count]}, inplace=True)
-        elif each_feat > 0.095:
+        elif each_feat > importance:
             new_feature_importances.append(each_feat)
         count = count + 1
 
