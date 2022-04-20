@@ -1,5 +1,15 @@
-# Machine learning index prediction
 
+<!-- Find and Replace All [repo_name] -->
+<!-- Replace [product-screenshot] [product-url] -->
+<!-- Other Badgets https://naereen.github.io/badges/ -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+
+
+
+# Machine learning index prediction
 This repository represents comparing of performance machine learning model and neural network model. It uses yesterday’s market data from various SP500 sub-indexes.
 
 ---
@@ -28,7 +38,7 @@ This project leverages the following tools for financial analysis:
 
 - [StandardScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html) - For Standardization of datasets
 
-- [scilit-learn](https://scikit-learn.org/stable/) - tool forpredictive data alalysis
+- [scilit-learn](https://scikit-learn.org/stable/) - tool for predictive data alalysis
 
 - [TensorFlow](https://www.tensorflow.org) - open-source machine learning platform
 
@@ -39,7 +49,7 @@ This project leverages the following tools for financial analysis:
 ## Input data
 
 Input data is yesterday’s market data from various SP500 sub-indexes. Sub-indexes to use: Sectors.
-`SP500.db` contains data foranalysis.
+`SP500.db` contains data for analysis.
 
 Data is provided preformatted via the SP500.db. Tables included are:
 
@@ -48,7 +58,7 @@ Data is provided preformatted via the SP500.db. Tables included are:
 - SectorDFNegative and SectorDF3YNegative: 1Y and 3Y versions of the data, but SPY is -1 when its negative instead of 0.
 - SectorDFLarge and SectorDF3YLarge: 1Y and 3Y versions of the data, but spy is 1 if its greater than 0.005, -1 if less than -0.005, or 0 if in between.
 
-Data can be pulled from teh Alpaca API using SP500.ipynb and stored in the DB. An alpaca API key is required and should be stored in a .env file (not included). Howeversample data is preloaded in the Database runnign the SPI is not necessary.
+Data can be pulled from teh Alpaca API using SP500.ipynb and stored in the DB. An alpaca API key is required and should be stored in a .env file (not included). However sample data is preloaded in the Database running the SPI is not necessary.
 
 ---
 
@@ -128,7 +138,7 @@ But with the test data results. Not bad.
 Loss: 0.9621024131774902, Accuracy: 0.578125
 ```
 
-Unfortunattly, using of the different activation functions (`linear, tanh, softmax`) and changing number of the layers didn't improve results.
+Unfortunately, using of the different activation functions (`linear, tanh, softmax`) and changing number of the layers didn't improve results.
 
 Compute Receiver operating characteristic (ROC)
 
@@ -137,22 +147,39 @@ Compute Receiver operating characteristic (ROC)
 The top left corner of the plot is the “ideal” point - a false positive rate of zero, and a true positive rate of one.
 In our case, the curve is on the true positive side throughout its length, which is not ideal, but indicates the prevalence of a more correct prediction.
 
-## Contributors
-
-Mike Canavan
-
-Jose Tollinchi
-
-David Lee Ping
-
-Dev Patel
-
-Ashok Kumar
-
-Vladislav Glupak - [Linkedin](https://www.linkedin.com/in/vladislav-glupak/)
-
 ---
 
+## Contributors
+Mike Canavan
+
+Glupak Vladislav [Linkedin](https://www.linkedin.com/in/vladislav-glupak/)
+
+Jose Tollinchi [Linkedin](https://www.linkedin.com/in/josetollinchi/)
+
+<!-- David Lee Ping [Linkedin](https://www.linkedin.com/in/josetollinchi/) -->
+
+<!-- Dev Patel [Linkedin](https://www.linkedin.com/in/josetollinchi/) -->
+
+<!-- Ashok Kumar [Linkedin](https://www.linkedin.com/in/josetollinchi/) -->
+
+---
+Other Acknowledgements
+* [Img Shields](https://shields.io)
+* [Choose an Open Source License](https://choosealicense.com)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/AnaIitico/machine_learning_index_prediction.svg?style=for-the-badge
+[contributors-url]: https://github.com/AnaIitico/machine_learning_index_prediction/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/AnaIitico/machine_learning_index_prediction.svg?style=for-the-badge
+[forks-url]: https://github.com/AnaIitico/machine_learning_index_prediction/network/members
+[stars-shield]: https://img.shields.io/github/stars/AnaIitico/machine_learning_index_prediction.svg?style=for-the-badge
+[stars-url]: https://github.com/AnaIitico/machine_learning_index_prediction/stargazers
+[issues-shield]: https://img.shields.io/github/issues/AnaIitico/machine_learning_index_prediction/network/members?style=for-the-badge
+[issues-url]: https://github.com/AnaIitico/machine_learning_index_prediction/issues
+[license-url]: https://choosealicense.com/licenses/mit/#
+
+---
 ## License
 
-MIT
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
