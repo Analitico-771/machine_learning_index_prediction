@@ -50,7 +50,7 @@ def get_importance(train_split, X):
     """
     X_test, X_train_scaled, X_test_scaled, y_train, y_test = train_split.values()
     # Create an instance of the model
-    rdm_forest_model = RandomForestClassifier(max_depth=5, random_state=None)
+    rdm_forest_model = RandomForestClassifier(max_depth=5, random_state=3)
     rdm_forest_model.fit(X_train_scaled, np.ravel(y_train, order='c'), sample_weight=None)
     # analyze the feature importance values
     feat_importances = rdm_forest_model.feature_importances_

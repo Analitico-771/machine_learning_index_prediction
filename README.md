@@ -149,6 +149,64 @@ In our case, the curve is on the true positive side throughout its length, which
 
 ---
 
+## Supervised Ensemble Method
+
+The RandomForestClassifier library from sklearn was selected to create an ensemble learning method for classification. It can handle large datasets with multiple features and it's not vulnerable to overfitting.
+
+```
+rdm_forest_model = RandomForestClassifier(max_depth=5, random_state=3)
+```
+
+All input data was the same as the neural network and in the same format.
+
+Input columns were also the same as neural network and in the same format.
+
+1. Initial Full Features Model Test
+
+```
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ dense (Dense)               (None, 16)                192
+
+ dense_1 (Dense)             (None, 16)                272
+
+ dense_2 (Dense)             (None, 1)                 17
+
+=================================================================
+Total params: 481
+Trainable params: 481
+Non-trainable params: 0
+```
+
+After the trainig with 350 epochs. Great result!
+
+```
+Loss: 0.22692200541496277, Accuracy: 0.9263157844543457
+```
+
+![Loss](Images/nn_loss.JPG)
+
+![Accuracy](Images/nn_accuracy.JPG)
+
+But with the test data results. Not bad.
+
+```
+Loss: 0.9621024131774902, Accuracy: 0.578125
+```
+
+Unfortunately, using of the different activation functions (`linear, tanh, softmax`) and changing number of the layers didn't improve results.
+
+Compute Receiver operating characteristic (ROC)
+
+![ROC](Images/roc.JPG)
+
+The top left corner of the plot is the “ideal” point - a false positive rate of zero, and a true positive rate of one.
+In our case, the curve is on the true positive side throughout its length, which is not ideal, but indicates the prevalence of a more correct prediction.
+
+---
+
 ## Contributors
 Mike Canavan
 
