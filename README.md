@@ -164,37 +164,69 @@ Input columns were also the same as neural network and in the same format.
 1. Initial Full Features Model Test
 
 ```
-Model: "sequential"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #
-=================================================================
- dense (Dense)               (None, 16)                192
+Model: from sklearn.ensemble import RandomForestClassifier
 
- dense_1 (Dense)             (None, 16)                272
+Split and Train the data
+ 
+ # Select the split
+ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+ 
+ # Create a StandardScaler instance
+ scaler = StandardScaler()
 
- dense_2 (Dense)             (None, 1)                 17
-
-=================================================================
-Total params: 481
-Trainable params: 481
-Non-trainable params: 0
-```
-
-After the trainig with 350 epochs. Great result!
-
-```
-Loss: 0.22692200541496277, Accuracy: 0.9263157844543457
-```
-
-![Loss](Images/nn_loss.JPG)
-
-![Accuracy](Images/nn_accuracy.JPG)
-
-But with the test data results. Not bad.
+ # Apply the scaler model to fit the X-train data
+ X_scaler = scaler.fit(X_train)
+    
+ # Transform the X_train and X_test DataFrames using the X_scaler
+ X_train_scaled = X_scaler.transform(X_train)
+ X_test_scaled = X_scaler.transform(X_test)
 
 ```
-Loss: 0.9621024131774902, Accuracy: 0.578125
+
+Results after splitting, training, and fitting the data!
+
 ```
+balanced_accuracy_score: 0.6189516129032258
+```
+```
+confusion_matrix
+[[20 12]
+ [12 19]]
+```
+2. optimized Model Test
+
+```
+Model: from sklearn.ensemble import RandomForestClassifier
+
+Split and Train the data
+ 
+ # Select the split
+ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+ 
+ # Create a StandardScaler instance
+ scaler = StandardScaler()
+
+ # Apply the scaler model to fit the X-train data
+ X_scaler = scaler.fit(X_train)
+    
+ # Transform the X_train and X_test DataFrames using the X_scaler
+ X_train_scaled = X_scaler.transform(X_train)
+ X_test_scaled = X_scaler.transform(X_test)
+
+```
+
+Results after splitting, training, and fitting the data!
+
+```
+balanced_accuracy_score: 0.6189516129032258
+```
+```
+confusion_matrix
+[[20 12]
+ [12 19]]
+```
+
+
 
 Unfortunately, using of the different activation functions (`linear, tanh, softmax`) and changing number of the layers didn't improve results.
 
