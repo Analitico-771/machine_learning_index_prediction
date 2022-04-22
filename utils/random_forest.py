@@ -48,24 +48,22 @@ def get_importance(train_split, X):
     with only the selected important columns as features.
     Returns the RandomForestClassifier model instance.
     """
+
     X_test, X_train_scaled, X_test_scaled, y_train, y_test = train_split.values()
     # Create an instance of the model
-    rdm_forest_model = RandomForestClassifier(max_depth=5, random_state=None)
+    rdm_forest_model = RandomForestClassifier(max_depth=5, random_state=3)
+    # fit the model
     rdm_forest_model.fit(X_train_scaled, np.ravel(y_train, order='c'), sample_weight=None)
     # analyze the feature importance values
     feat_importances = rdm_forest_model.feature_importances_
+    X_new = X.copy()
+    X_new_cols = X_new.columns.to_list()
     new_feature_importances = []
     columns_to_drop = []
     dropped_feature_importances = []
     count = 0
-    X_new = X.copy()
-    X_new_cols = X_new.columns.to_list()
-    if 'SPY' in X_new_cols:
-        X_new.drop(columns={'SPY'})
-
-    print('X_new_cols', X_new_cols)
-    
-    importance = 0.095
+    # Drop importances below the mean of the importances array
+    importance = np.mean(feat_importances)
     # print(np.mean(feat_importances))
     # Check for importance level and remove cols from df below threshold
     for each_feat in feat_importances:
@@ -80,10 +78,10 @@ def get_importance(train_split, X):
         count = count + 1
 
     # check new X df for accuracy
-    print('feat_importances\n', feat_importances)
-    print('new_feature_importances\n', new_feature_importances)
-    print('dropped_feature_importances\n', dropped_feature_importances)
-    print('dropped_X_columns\n', columns_to_drop)
+    # print('feat_importances\n', feat_importances)
+    # print('new_feature_importances\n', new_feature_importances)
+    # print('dropped_feature_importances\n', dropped_feature_importances)
+    # print('dropped_X_columns\n', columns_to_drop)
     
     # Return the model and the new X df with optimized important columns
     return {
