@@ -163,47 +163,134 @@ Input columns were also the same as neural network and in the same format.
 
 1. Initial Full Features Model Test
 
-```
-Model: "sequential"
-_________________________________________________________________
- Layer (type)                Output Shape              Param #
-=================================================================
- dense (Dense)               (None, 16)                192
-
- dense_1 (Dense)             (None, 16)                272
-
- dense_2 (Dense)             (None, 1)                 17
-
-=================================================================
-Total params: 481
-Trainable params: 481
-Non-trainable params: 0
-```
-
-After the trainig with 350 epochs. Great result!
+- Call the function to train and split data:
+    - initial_train_split = get_train_split(X, y)
+- Call the function to optimize the data and create model instance
+    - sp500_optimized = get_importance(initial_train_split, X)
+    - It's called here to instantiate the model and obtain feature values
 
 ```
-Loss: 0.22692200541496277, Accuracy: 0.9263157844543457
+Model: from sklearn.ensemble import RandomForestClassifier
+
+def get_train_split(X, y):
+    """
+    Get the train split for the machine learning model and scales the data.
+    Returns scaled and non-scaled trained and test data.
+    """
+    # Select the split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+
+    # Display sample data
+    X_test.head()
+
+    # Create a StandardScaler instance
+    scaler = StandardScaler()
+    
+    # Apply the scaler model to fit the X-train data
+    X_scaler = scaler.fit(X_train)
+    
+    # Transform the X_train and X_test DataFrames using the X_scaler
+    X_train_scaled = X_scaler.transform(X_train)
+    X_test_scaled = X_scaler.transform(X_test)
+
+    return {
+        'X_test': X_test,
+        'X_train_scaled': X_train_scaled,
+        'X_test_scaled': X_test_scaled,
+        'y_train': y_train,
+        'y_test': y_test
+    }
+
 ```
 
-![Loss](Images/nn_loss.JPG)
-
-![Accuracy](Images/nn_accuracy.JPG)
-
-But with the test data results. Not bad.
+Results after splitting, training, and fitting the data!
 
 ```
-Loss: 0.9621024131774902, Accuracy: 0.578125
+balanced_accuracy_score: 0.6189516129032258
+```
+```
+confusion_matrix
+[[20 12]
+ [12 19]]
+```
+2. Optimized Model Test
+
+- The optimization function dropped features that had values less than the mean of the feature_importances_ array
+- Call the function to re-train and split data:
+    - initial_train_split = get_train_split(X, y)
+- Re-fit the optimized / trained data
+    - rdm_forest_model.fit(X_train_scaled_1, np.ravel(y_train_1, order='c'), sample_weight=None)
+
+```
+Model Feature Optimization Function
+
+def get_importance(train_split, X):
+    """
+    Get the importance of the df features and returns a new df
+    with only the selected important columns as features.
+    Returns the RandomForestClassifier model instance.
+    """
+    X_test, X_train_scaled, X_test_scaled, y_train, y_test = train_split.values()
+    # Create an instance of the model
+    rdm_forest_model = RandomForestClassifier(max_depth=5, random_state=3)
+    # fit the model
+    rdm_forest_model.fit(X_train_scaled, np.ravel(y_train, order='c'), sample_weight=None)
+    # analyze the feature importance values
+    feat_importances = rdm_forest_model.feature_importances_
+    X_new = X.copy()
+    X_new_cols = X_new.columns.to_list()
+    new_feature_importances = []
+    columns_to_drop = []
+    dropped_feature_importances = []
+    count = 0
+    # Drop importances below the mean of the importances array
+    importance = np.mean(feat_importances)
+    # print(np.mean(feat_importances))
+    # Check for importance level and remove cols from df below threshold
+    for each_feat in feat_importances:
+        if each_feat <= importance:
+            dropped_feature_importances.append(each_feat)
+            # new_feature_importances.pop(each_feat)
+            columns_to_drop.append(X_new_cols[count])
+            # Remove open and close columns from X_new
+            X_new.drop(columns={X_new_cols[count]}, inplace=True)
+        elif each_feat > importance:
+            new_feature_importances.append(each_feat)
+        count = count + 1
+    
+    # Return the model and the new X df with optimized important columns
+    return {
+        'new_feature_importances': new_feature_importances,
+        'rdm_forest_model': rdm_forest_model,
+        'X_new': X_new
+    }
+
 ```
 
-Unfortunately, using of the different activation functions (`linear, tanh, softmax`) and changing number of the layers didn't improve results.
+Results after optimizing re-training and fitting the data!
+
+Optimized Columns
+
+![ROC](Images/feature_importances_sp500_mdi.png)
+
+
+```
+balanced_accuracy_score: 0.5871975806451613
+```
+```
+confusion_matrix
+[[19 13]
+ [13 18]]
+```
 
 Compute Receiver operating characteristic (ROC)
 
-![ROC](Images/roc.JPG)
+![ROC](Images/forest_roc.png)
 
 The top left corner of the plot is the “ideal” point - a false positive rate of zero, and a true positive rate of one.
 In our case, the curve is on the true positive side throughout its length, which is not ideal, but indicates the prevalence of a more correct prediction.
+
+The optimization decreased slightly in accuracy but further optimization beyond these settings is needed to see if the ROC curve can be improved.
 
 ---
 
