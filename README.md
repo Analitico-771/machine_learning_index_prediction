@@ -1,15 +1,14 @@
-
 <!-- Find and Replace All [repo_name] -->
 <!-- Replace [product-screenshot] [product-url] -->
 <!-- Other Badgets https://naereen.github.io/badges/ -->
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 
-
-
 # Machine learning index prediction
+
 This repository represents comparing of performance machine learning model and neural network model. It uses yesterday’s market data from various SP500 sub-indexes.
 
 ---
@@ -164,10 +163,10 @@ Input columns were also the same as neural network and in the same format.
 1. Initial Full Features Model Test
 
 - Call the function to train and split data:
-    - initial_train_split = get_train_split(X, y)
+  - initial_train_split = get_train_split(X, y)
 - Call the function to optimize the data and create model instance
-    - sp500_optimized = get_importance(initial_train_split, X)
-    - It's called here to instantiate the model and obtain feature values
+  - sp500_optimized = get_importance(initial_train_split, X)
+  - It's called here to instantiate the model and obtain feature values
 
 ```
 Model: from sklearn.ensemble import RandomForestClassifier
@@ -185,10 +184,10 @@ def get_train_split(X, y):
 
     # Create a StandardScaler instance
     scaler = StandardScaler()
-    
+
     # Apply the scaler model to fit the X-train data
     X_scaler = scaler.fit(X_train)
-    
+
     # Transform the X_train and X_test DataFrames using the X_scaler
     X_train_scaled = X_scaler.transform(X_train)
     X_test_scaled = X_scaler.transform(X_test)
@@ -208,18 +207,20 @@ Results after splitting, training, and fitting the data!
 ```
 balanced_accuracy_score: 0.6189516129032258
 ```
+
 ```
 confusion_matrix
 [[20 12]
  [12 19]]
 ```
+
 2. Optimized Model Test
 
-- The optimization function dropped features that had values less than the mean of the feature_importances_ array
+- The optimization function dropped features that had values less than the mean of the feature*importances* array
 - Call the function to re-train and split data:
-    - initial_train_split = get_train_split(X, y)
+  - initial_train_split = get_train_split(X, y)
 - Re-fit the optimized / trained data
-    - rdm_forest_model.fit(X_train_scaled_1, np.ravel(y_train_1, order='c'), sample_weight=None)
+  - rdm_forest_model.fit(X_train_scaled_1, np.ravel(y_train_1, order='c'), sample_weight=None)
 
 ```
 Model Feature Optimization Function
@@ -257,7 +258,7 @@ def get_importance(train_split, X):
         elif each_feat > importance:
             new_feature_importances.append(each_feat)
         count = count + 1
-    
+
     # Return the model and the new X df with optimized important columns
     return {
         'new_feature_importances': new_feature_importances,
@@ -273,10 +274,10 @@ Optimized Columns
 
 ![ROC](Images/feature_importances_sp500_mdi.png)
 
-
 ```
 balanced_accuracy_score: 0.5871975806451613
 ```
+
 ```
 confusion_matrix
 [[19 13]
@@ -292,9 +293,31 @@ In our case, the curve is on the true positive side throughout its length, which
 
 The optimization decreased slightly in accuracy but further optimization beyond these settings is needed to see if the ROC curve can be improved.
 
+## Logistic Regression
+
+```
+Balanced Accuracy Score: 0.42
+Classification Report:
+Precision Avg: 0.41
+Recall Avg: 0.42
+```
+
+Accuracy lesser than Random Forest Model.
+
+Balanced accuracy score and recall avg indicate less than ideal performance of the logistics regression model.
+
+Overall performance of the model was poor.
+
+![ROC](Images/logistic_roc.JPG)
+
+## Summary
+
+![ROC](Images/summary.JPG)
+
 ---
 
 ## Contributors
+
 Mike Canavan
 
 Glupak Vladislav [Linkedin](https://www.linkedin.com/in/vladislav-glupak/)
@@ -308,12 +331,15 @@ David Lee Ping [Linkedin](https://www.linkedin.com/in/david-lee-ping/)
 <!-- Ashok Kumar [Linkedin](https://www.linkedin.com/in/josetollinchi/) -->
 
 ---
+
 Other Acknowledgements
-* [Img Shields](https://shields.io)
-* [Choose an Open Source License](https://choosealicense.com)
+
+- [Img Shields](https://shields.io)
+- [Choose an Open Source License](https://choosealicense.com)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/AnaIitico/machine_learning_index_prediction.svg?style=for-the-badge
 [contributors-url]: https://github.com/AnaIitico/machine_learning_index_prediction/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/AnaIitico/machine_learning_index_prediction.svg?style=for-the-badge
@@ -325,6 +351,7 @@ Other Acknowledgements
 [license-url]: https://choosealicense.com/licenses/mit/#
 
 ---
+
 ## License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
