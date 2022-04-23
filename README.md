@@ -288,10 +288,9 @@ Compute Receiver operating characteristic (ROC)
 
 ![ROC](Images/forest_roc.png)
 
-The top left corner of the plot is the “ideal” point - a false positive rate of zero, and a true positive rate of one.
-In our case, the curve is on the true positive side throughout its length, which is not ideal, but indicates the prevalence of a more correct prediction.
+The Area Under the Curve (AUC) is in the range of [0, 1] and shows the model is on the true positive side throughout its length, but the AUC size is relatively small which indicates performance challenges with the model.
 
-The optimization decreased slightly in accuracy but further optimization beyond these settings is needed to see if the ROC curve can be improved.
+Overall the model performed well.
 
 ## Logistic Regression
 
