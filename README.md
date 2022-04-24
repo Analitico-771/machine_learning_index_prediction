@@ -327,7 +327,7 @@ David Lee Ping [Linkedin](https://www.linkedin.com/in/david-lee-ping/)
 
 <!-- Dev Patel [Linkedin](https://www.linkedin.com/in/josetollinchi/) -->
 
-<!-- Ashok Kumar [Linkedin](https://www.linkedin.com/in/josetollinchi/) -->
+Ashok Kumar [Linkedin](https://www.linkedin.com/in/msashokkumar/)
 
 ---
 
