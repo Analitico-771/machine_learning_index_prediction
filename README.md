@@ -8,8 +8,11 @@
 [![Issues][issues-shield]][issues-url]
 
 # Machine learning index prediction
+## About
 
-This repository represents comparing of performance machine learning model and neural network model. It uses yesterday’s market data from various SP500 sub-indexes.
+This application compares the performance of Unsupervised machine learning models and Supervised models. It downloads 3 yrs of market daily close data from all SP500 companies and divides them into Sectors to be used as features for learning and training the data, in order to predict wether the index will be a Buy or Sell the next day.
+
+The results are evaluated to determine each model's performance and the metrics are presented along with the analysis.
 
 ---
 
